@@ -2,6 +2,7 @@ import mongoose, { Schema, model, models } from "mongoose";
 import bcrypt from "bcryptjs";
 
 export interface meraUser {
+  name: string;
   email: string;
   password: string;
   _id?: mongoose.Types.ObjectId;
@@ -11,6 +12,7 @@ export interface meraUser {
 
 const userSchema = new Schema<meraUser>(
   {
+    name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
   },
@@ -26,6 +28,6 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-const User = models?.User || model<meraUser>("User",userSchema)
+const User = models?.User || model<meraUser>("User", userSchema);
 
-export default User
+export default User;
